@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2020",                // Define o ECMAScript target para o qual compilar
+    "module": "commonjs",              // Define o tipo de módulo para CommonJS
+    "outDir": "./dist",                // Diretório onde os arquivos transpilados serão armazenados
+    "rootDir": "./src",                // Diretório raiz para arquivos TypeScript
+    "strict": true,                    // Habilita o modo estrito, que exige tipos explícitos
+    "esModuleInterop": true,           // Permite importações de módulos ES com require()
+    "forceConsistentCasingInFileNames": true, // Exige que o casing seja consistente entre as referências
+    "skipLibCheck": true,              // Ignora a verificação de arquivos de declaração (.d.ts)
+    "allowSyntheticDefaultImports": true, // Permite imports de padrão sintético para módulos ES
+    "noImplicitAny": true,             // Exige que todas as variáveis sejam explicitamente tipadas
+    "moduleResolution": "node"         // Define o sistema de resolução de módulos para Node.js
+  },
+  "include": ["src/**/*"],             // Arquivos TypeScript que serão incluídos na compilação
+  "exclude": ["node_modules", "dist"]  // Diretórios a serem excluídos da compilação
+}

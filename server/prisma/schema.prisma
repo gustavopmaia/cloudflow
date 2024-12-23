@@ -1,0 +1,68 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+model User {
+  id        String   @id @default(uuid()) @map("id")
+  email     String   @unique @map("email")
+  name      String   @map("name")
+  lastName  String   @map("last_name")
+  password  String   @map("password")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  environments Environments[]
+}
+
+model Environments {
+  id            String   @id @default(uuid()) @map("id")
+  type          String   @map("type")
+  cloudProvider String   @default("AWS") @map("cloud_provider")
+  cpuSize       Int      @map("cpu_size")
+  memorySize    Int      @map("memory_size")
+  storage       Int      @map("storage")
+  userId        String   @map("user_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  services Services[]
+  security Security[]
+  metrics  Metrics[]
+  User     User       @relation(fields: [userId], references: [id])
+}
+
+model Services {
+  id            String   @id @default(uuid()) @map("id")
+  name          String   @map("name")
+  environmentId String   @map("environment_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  environment Environments @relation(fields: [environmentId], references: [id])
+}
+
+model Security {
+  id            String   @id @default(uuid()) @map("id")
+  environmentId String   @map("environment_id")
+  apiKey        String   @map("api_key")
+  sshKey        String   @map("ssh_key")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  environment Environments @relation(fields: [environmentId], references: [id])
+}
+
+model Metrics {
+  id            String   @id @default(uuid()) @map("id")
+  environmentId String   @map("environment_id")
+  cpuUsage      Int      @map("cpu_usage")
+  memoryUsage   Int      @map("memory_usage")
+  storageUsage  Int      @map("storage_usage")
+  cost          Float    @map("cost")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  environment Environments @relation(fields: [environmentId], references: [id])
+}
