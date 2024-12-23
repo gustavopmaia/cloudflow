@@ -1,0 +1,105 @@
+{
+  "routes": [
+    {
+      "name": "Cadastro de Usuário",
+      "route": "/users/signup",
+      "method": "POST",
+      "payload": {
+        "email": "example@example.com",
+        "password": "password"
+      }
+    },
+    {
+      "name": "Login de Usuário",
+      "route": "/users/login",
+      "method": "POST",
+      "payload": {
+        "email": "example@example.com",
+        "password": "password"
+      }
+    },
+    {
+      "name": "Obter Detalhes do Usuário",
+      "route": "/users/{id}",
+      "method": "GET",
+      "parameter": "{id: userId}"
+    },
+    {
+      "name": "Atualizar Detalhes do Usuário",
+      "route": "/users/{id}",
+      "method": "PUT",
+      "parameter": "{id: userId}",
+      "payload": {
+        "email": "newemail@example.com",
+        "password": "newpassword"
+      }
+    },
+    {
+      "name": "Criar Ambiente",
+      "route": "/environments",
+      "method": "POST",
+      "payload": {
+        "type": "Production",
+        "cpuSize": 4,
+        "memorySize": 16,
+        "storage": 100,
+        "cloudProvider": "AWS"
+      }
+    },
+    {
+      "name": "Listar Ambientes de um Usuário",
+      "route": "/users/{id}/environments",
+      "method": "GET",
+      "parameter": "{id: userId}"
+    },
+    {
+      "name": "Atualizar Ambiente",
+      "route": "/environments/{id}",
+      "method": "PUT",
+      "parameter": "{id: environmentId}",
+      "payload": {
+        "type": "Development",
+        "cpuSize": 2,
+        "memorySize": 8,
+        "storage": 50
+      }
+    },
+    {
+      "name": "Deletar Ambiente",
+      "route": "/environments/{id}",
+      "method": "DELETE",
+      "parameter": "{id: environmentId}"
+    },
+    {
+      "name": "Listar Serviços de um Ambiente",
+      "route": "/environments/{id}/services",
+      "method": "GET",
+      "parameter": "{id: environmentId}"
+    },
+    {
+      "name": "Criar Serviço para Ambiente",
+      "route": "/environments/{id}/services",
+      "method": "POST",
+      "parameter": "{id: environmentId}",
+      "payload": {
+        "name": "Database",
+        "environmentId": "environmentId"
+      }
+    },
+    {
+      "name": "Atualizar Serviço",
+      "route": "/services/{id}",
+      "method": "PUT",
+      "parameter": "{id: serviceId}",
+      "payload": {
+        "name": "Updated Database"
+      }
+    },
+    {
+      "name": "Deletar Serviço",
+      "route": "/services/{id}",
+      "method": "DELETE",
+      "parameter": "{id: serviceId}"
+    }
+  ]
+}

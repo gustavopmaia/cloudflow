@@ -1,7 +1,12 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 import { User } from '../../../types/user'
-import { createUserService, getUserService, updateUserService } from '../services/user.service'
+import {
+  createUserService,
+  getUserEnvironmentService,
+  getUserService,
+  updateUserService,
+} from '../services/user.service'
 import { errorMessage, successMessage } from '../../../utils/messages'
 import { AppError } from '../../../utils/error-handler'
 import { Prisma } from '@prisma/client'
@@ -107,6 +112,30 @@ export const updateUserController = async (request: FastifyRequest, reply: Fasti
       }
     }
 
+    if (error instanceof AppError) {
+      return reply.status(error.statusCode).send(errorMessage(error.message, error.statusCode))
+    }
+
+    if (error instanceof Error) {
+      return reply.status(500).send(errorMessage(error.message, 500))
+    }
+
+    return reply.status(500).send(errorMessage('Internal server error', 500))
+  }
+}
+
+export const GetUserEnvironmentController = async (request: FastifyRequest, reply: FastifyReply) => {
+  try {
+    const { id } = request.params as { id: string }
+
+    const user = await getUserEnvironmentService(id)
+
+    if (!user) {
+      return reply.status(404).send(errorMessage('User not found', 404))
+    }
+
+    return reply.status(200).send(successMessage(user.environments))
+  } catch (error) {
     if (error instanceof AppError) {
       return reply.status(error.statusCode).send(errorMessage(error.message, error.statusCode))
     }
