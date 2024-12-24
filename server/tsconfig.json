@@ -12,6 +12,6 @@
     "noImplicitAny": true,             // Exige que todas as variáveis sejam explicitamente tipadas
     "moduleResolution": "node"         // Define o sistema de resolução de módulos para Node.js
   },
-  "include": ["src/**/*"],             // Arquivos TypeScript que serão incluídos na compilação
+  "include": ["src/**/*", "src/types/fastify.d.ts"],             // Arquivos TypeScript que serão incluídos na compilação
   "exclude": ["node_modules", "dist"]  // Diretórios a serem excluídos da compilação
 }

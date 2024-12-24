@@ -18,6 +18,12 @@ export const getUser = async (id: string) => {
   })
 }
 
+export const getUserEmail = async (email: string) => {
+  return prisma.user.findUnique({
+    where: { email },
+  })
+}
+
 export const updateUser = async (id: string, data: Partial<User>) => {
   return prisma.user.update({ where: { id }, data })
 }
