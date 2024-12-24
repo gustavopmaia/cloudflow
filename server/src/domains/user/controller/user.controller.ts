@@ -10,6 +10,7 @@ import {
 import { errorMessage, successMessage } from '../../../utils/messages'
 import { AppError } from '../../../utils/error-handler'
 import { Prisma } from '@prisma/client'
+import argon2 from 'argon2'
 
 export const createUserController = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
@@ -100,6 +101,11 @@ export const updateUserController = async (request: FastifyRequest, reply: Fasti
 
       const formattedErrors = errors.map((err) => `${err.path}: ${err.message}`).join(', ')
       return reply.status(400).send(errorMessage('Validation error', 400, formattedErrors))
+    }
+
+    if (user.password) {
+      user.password = await argon2.hash(user.password)
+      return await updateUserService(id, user)
     }
 
     const { password, ...userReturn } = await updateUserService(id, user)

@@ -1,14 +1,34 @@
 import { prisma } from '../prisma'
 import { User } from '../types/user'
 
-const createUser = async (data: Required<User> & { id?: string }) => {
-  prisma.user.create({ data })
+export const createUser = async (data: Required<User> & { id?: string }) => {
+  return prisma.user.create({ data })
 }
 
-const getUser = async (id: string) => {
-  prisma.user.findUnique({ where: { id } })
+export const getUser = async (id: string) => {
+  return prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      lastName: true,
+      email: true,
+      createdAt: true,
+    },
+  })
 }
 
-const updateUser = async (id: number, data: Partial<User>) => {
-  prisma.user.update({ where: { id }, data })
+export const updateUser = async (id: string, data: Partial<User>) => {
+  return prisma.user.update({ where: { id }, data })
+}
+
+export const getUserEnvironment = async (id: string) => {
+  return prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      environments: true,
+    },
+  })
 }

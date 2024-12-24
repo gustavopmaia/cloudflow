@@ -1,50 +1,24 @@
 import argon2 from 'argon2'
-import { prisma } from '../../../prisma'
 import { User } from '../../../types/user'
-import { userInfo } from 'os'
+import { createUser, getUser, getUserEnvironment, updateUser } from '../../../repositories/user.repository'
 
 export const createUserService = async (user: Required<User> & { id?: string }) => {
   const hashedPassword = await argon2.hash(user.password)
 
-  return await prisma.user.create({
-    data: {
-      ...user,
-      password: hashedPassword,
-    },
+  return await createUser({
+    ...user,
+    password: hashedPassword,
   })
 }
 
 export const getUserService = async (id: string) => {
-  return prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      name: true,
-      lastName: true,
-      email: true,
-      createdAt: true,
-    },
-  })
+  return await getUser(id)
 }
 
 export const updateUserService = async (id: string, user: Partial<User>) => {
-  return prisma.user.update({
-    where: {
-      id,
-    },
-    data: user,
-  })
+  return await updateUser(id, user)
 }
 
 export const getUserEnvironmentService = async (id: string) => {
-  return prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      environments: true,
-    },
-  })
+  return await getUserEnvironment(id)
 }

@@ -1,10 +1,18 @@
 import { prisma } from '../prisma'
 import { Service } from '../types/service'
 
-const updateService = async (id: string, data: Partial<Service>) => {
-  return prisma.service.update({ where: { id }, data })
+export const createServiceRepo = async (service: Required<Service> & { id?: string }) => {
+  return prisma.services.create({ data: service })
 }
 
-const deleteService = async (id: string) => {
-  return prisma.service.delete({ where: { id } })
+export const updateServiceRepo = async (id: string, data: Partial<Service>) => {
+  return await prisma.services.update({ where: { id }, data })
+}
+
+export const deleteServiceRepo = async (id: string) => {
+  return await prisma.services.delete({ where: { id } })
+}
+
+export const getServiceRepo = async (id: string) => {
+  return await prisma.services.findUnique({ where: { id } })
 }
