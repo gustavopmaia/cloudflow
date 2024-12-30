@@ -9,11 +9,12 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(uuid()) @map("id")
-  email     String   @unique @map("email")
-  name      String   @map("name")
-  lastName  String   @map("last_name")
-  password  String   @map("password")
+  id       String @id @default(uuid()) @map("id")
+  email    String @unique @map("email")
+  name     String @map("name")
+  lastName String @map("last_name")
+  password String @map("password")
+
   createdAt DateTime @default(now()) @map("created_at")
 
   environments Environments[]
@@ -23,10 +24,12 @@ model Environments {
   id            String   @id @default(uuid()) @map("id")
   type          String   @map("type")
   cloudProvider String   @default("AWS") @map("cloud_provider")
+  region        String   @default("us-east-2") @map("region")
   cpuSize       Int      @map("cpu_size")
   memorySize    Int      @map("memory_size")
   storage       Int      @map("storage")
   userId        String   @map("user_id")
+  status        String   @default("pending") @map("status")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 

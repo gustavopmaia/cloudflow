@@ -54,7 +54,7 @@ export const appRoutes = async (app: FastifyInstance) => {
 
   app.post('/login', async (req, res) => loginController(req, res))
 
-  app.get('/', { preHandler: authenticate }, async (req: FastifyRequest, res: FastifyReply) => {
+  app.get('/', { preHandler: authenticate }, async (_req: FastifyRequest, res: FastifyReply) => {
     res.send({ hello: 'world' })
   })
 }
